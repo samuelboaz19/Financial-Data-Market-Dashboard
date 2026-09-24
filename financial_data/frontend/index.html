@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Market Dashboard</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<div class="app">
+
+  <!-- ============ Left rail: assets + system status ============ -->
+  <aside class="rail">
+    <div class="rail-header">
+      <span class="rail-mark">MD</span>
+      <div class="rail-title">
+        <span class="rail-name">Market Dashboard</span>
+        <span class="rail-sub">crypto_ticks · TimescaleDB</span>
+      </div>
+    </div>
+
+    <div class="rail-section">
+      <h2 class="rail-heading">Assets</h2>
+      <div id="asset-list" class="asset-list">
+        <div class="asset-list-loading">Loading assets…</div>
+      </div>
+    </div>
+
+    <div class="rail-section rail-section-status">
+      <h2 class="rail-heading">System status</h2>
+      <ul id="status-list" class="status-list">
+        <li class="status-row" data-key="api">
+          <span class="status-dot" data-state="pending"></span>
+          <span class="status-label">API</span>
+          <span class="status-value">Checking…</span>
+        </li>
+        <li class="status-row" data-key="database">
+          <span class="status-dot" data-state="pending"></span>
+          <span class="status-label">Database</span>
+          <span class="status-value">Checking…</span>
+        </li>
+        <li class="status-row" data-key="timescaledb">
+          <span class="status-dot" data-state="pending"></span>
+          <span class="status-label">TimescaleDB</span>
+          <span class="status-value">Checking…</span>
+        </li>
+        <li class="status-row status-row-plain" data-key="latest-data">
+          <span class="status-label">Latest data</span>
+          <span class="status-value" id="status-latest-data">—</span>
+        </li>
+        <li class="status-row status-row-plain" data-key="data-age">
+          <span class="status-label">Data age</span>
+          <span class="status-value" id="status-data-age">—</span>
+        </li>
+      </ul>
+    </div>
+  </aside>
+
+  <!-- ============ Main content ============ -->
+  <main class="main">
+
+    <!-- Current market info -->
+    <section class="panel panel-quote" id="quote-panel">
+      <div class="quote-head">
+        <div>
+          <div class="quote-symbol" id="quote-symbol">—</div>
+          <div class="quote-name" id="quote-name">Select an asset</div>
+        </div>
+        <div class="quote-price-block">
+          <div class="quote-price" id="quote-price">—</div>
+          <div class="quote-change" id="quote-change">—</div>
+        </div>
+      </div>
+      <div class="quote-meta">
+        <div class="quote-meta-item">
+          <span class="quote-meta-label">Latest timestamp</span>
+          <span class="quote-meta-value" id="quote-time">—</span>
+        </div>
+        <div class="quote-meta-item">
+          <span class="quote-meta-label">Latest volume</span>
+          <span class="quote-meta-value" id="quote-volume">—</span>
+        </div>
+        <div class="quote-meta-item">
+          <span class="quote-meta-label">Previous price</span>
+          <span class="quote-meta-value" id="quote-prev">—</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Price chart -->
+    <section class="panel" id="chart-panel">
+      <div class="panel-head">
+        <h2 class="panel-title">Price</h2>
+        <div class="range-toggle" id="range-toggle">
+          <button class="range-btn" data-range="1h">1H</button>
+          <button class="range-btn is-active" data-range="6h">6H</button>
+          <button class="range-btn" data-range="24h">24H</button>
+          <button class="range-btn" data-range="7d">7D</button>
+        </div>
+      </div>
+      <div class="chart-wrap">
+        <canvas id="price-chart"></canvas>
+        <div class="panel-empty" id="chart-empty" hidden>No tick data in this range.</div>
+        <div class="panel-error" id="chart-error" hidden></div>
+      </div>
+    </section>
+
+    <!-- Daily candles -->
+    <section class="panel" id="candle-panel">
+      <div class="panel-head">
+        <h2 class="panel-title">Daily candles</h2>
+        <span class="panel-sub">one_day_candle · last 14 days</span>
+      </div>
+      <div class="table-wrap">
+        <table class="candle-table">
+          <thead>
+            <tr>
+              <th>Date</th>
+              <th>Symbol</th>
+              <th class="num">Open</th>
+              <th class="num">High</th>
+              <th class="num">Low</th>
+              <th class="num">Close</th>
+              <th class="num">Volume</th>
+            </tr>
+          </thead>
+          <tbody id="candle-body">
+            <tr><td colspan="7" class="table-loading">Loading candles…</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.5.0/dist/chart.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns@3.0.0/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
+<script src="config.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
