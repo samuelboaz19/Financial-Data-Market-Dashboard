@@ -1,5 +1,8 @@
 # Financial Data Market Dashboard
 
+<img width="1461" height="1196" alt="Screenshot1" src="https://github.com/user-attachments/assets/423a6203-7f36-4740-814d-b748b5a58a25" />
+
+
 A local **FastAPI + PostgreSQL/TimescaleDB** project for working with time-series market data.
 
 The project is designed as a practical database/API troubleshooting lab covering:
